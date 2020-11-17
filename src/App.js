@@ -5,25 +5,25 @@ class App extends Component {
     constructor(){
         super();
         this.state = {
-            value: ""
+            value: "",
+            img: "https://www.am570.com.br/images/posts/1119/1119.jpg"
         }
     }
 
     handleChange = (event) =>{
-        this.setState({value: event.target.value})
+        this.setState({img: URL.createObjectURL(event.target.files[0])})
+        console.log(event.target)
     }
 
     handleSubmit = (event) => {
-        console.log(this.state.value)
+        console.log(this.state.img)
     }
 
     render () { 
         return(  
             <div className="App">
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" name="name" value={this.state.value} onChange={this.handleChange}/>
-                    <input type="submit" value="Send" />
-                </form>        
+                <input type="file" name="file" onChange={this.handleChange}/>
+                <img src={this.state.img} alt="" />
             </div>)
     };
 }

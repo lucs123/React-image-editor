@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import './App.css';
+import CropDemo from './components/Cropper'; 
 
 class App extends Component {
     constructor(){
@@ -23,7 +24,7 @@ class App extends Component {
         return(  
             <div className="App">
                 <input type="file" name="file" onChange={this.handleChange}/>
-                <img src={this.state.img} alt="" />
+                <CropDemo />
             </div>)
     };
 }

@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import './App.css';
-import CropDemo from './components/Cropper'; 
+import Cropper from './components/Cropper'; 
 
 class App extends Component {
     constructor(){
@@ -23,8 +23,10 @@ class App extends Component {
     render () { 
         return(  
             <div className="App">
-                <input type="file" name="file" onChange={this.handleChange}/>
-                <CropDemo />
+                <div>
+                    <input type="file" accept="image/*" onChange={this.handleChange} />
+                </div>
+                <Cropper src={this.state.img}/>
             </div>)
     };
 }

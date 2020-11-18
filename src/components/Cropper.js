@@ -98,6 +98,7 @@ class Cropper extends Component{
             onImageLoaded={this.onImageLoaded}
             onComplete={this.onCropComplete}
             onChange={this.onCropChange}
+            disabled={this.props.disabled}
           />
         )}
         {croppedImageUrl && (

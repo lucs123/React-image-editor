@@ -12,7 +12,8 @@ class App extends Component {
         this.state = {
             value: "",
             img: unequalized,
-            cropDisabled: true
+            cropDisabled: true,
+            oldImages: []
         }
         this.srcRef = React.createRef()
         this.cnvRef = React.createRef()
@@ -45,9 +46,10 @@ class App extends Component {
         const ctx = canvas.getContext("2d");
         ctx.drawImage(image,0,0,image.width,image.height);
         const cropper = new Cropper(canvas, {
-        zoomable: false,
+            zoomable: false,
         // scalable: false,
         // aspectRatio: 1,
+            autoCrop: false,
         crop(event) {
             // console.log(event.detail.x);
             // console.log(event.detail.y);
@@ -62,18 +64,13 @@ class App extends Component {
         const orRef = this.orRef.current
         let desRef = this.desRef.current
 
-        // /*global cv*/
-        // let mat = cv.imread(this.srcRef.current)
-        // let dst = new cv.Mat();
-        // // let dst = []
-        // cv.cvtColor(mat, mat, cv.COLOR_RGBA2GRAY, 0);
-        // cv.equalizeHist(mat,dst)
-        // // cv.imwrite('res.png')
-        // cv.imshow(orRef, mat);
-        // cv.imshow(desRef, dst);
-        // console.log(dst)
-        // console.log(mat)
-        // // console.log(equ)
+        /*global cv*/
+        let mat = cv.imread(image)
+        let dst = new cv.Mat();
+        cv.cvtColor(mat, mat, cv.COLOR_RGBA2GRAY, 0);
+        cv.equalizeHist(mat,dst)
+        // cv.imwrite('res.png')
+        cv.imshow(canvas, dst);
         
     }
 

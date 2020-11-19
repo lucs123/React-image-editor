@@ -11,6 +11,8 @@ class App extends Component {
             img: image,
             cropDisabled: true
         }
+        this.srcRef = React.createRef()
+        this.desRef = React.createRef()
     }
 
     handleChange = (event) =>{
@@ -26,10 +28,19 @@ class App extends Component {
         this.setState({cropDisabled: false})
     }
 
-    imgLoad(){
+    imgLoad = ()=>{
+        const srcRef = this.srcRef.current
+        let desRef = this.desRef.current
         /*global cv*/
-        let mat = cv.imread('img');
+        let mat = cv.imread(this.srcRef.current)
+        let dst = new cv.Mat();
+        cv.cvtColor(mat, mat, cv.COLOR_RGBA2GRAY, 0);
+        // cv.equalizeHist(mat.data,dst)
+        // cv.imwrite('res.png')
+        cv.imshow(desRef, mat);
+        console.log(dst)
         console.log(mat)
+        // console.log(equ)
     }
 
     render () { 
@@ -40,7 +51,8 @@ class App extends Component {
                     <input type="file" accept="image/*" onChange={this.handleChange} />
                 </div>
                 <Cropper src={img} disabled={cropDisabled}/>
-                <img id='img' src={this.state.img} onLoad={this.imgLoad} />
+                <img id='src' ref={this.srcRef} src={this.state.img} onLoad={this.imgLoad} />
+                <canvas id='dst' ref={this.desRef} />
                 <button onClick={this.handleCrop}>Cortar</button>
             </div>)
     };

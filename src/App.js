@@ -1,13 +1,14 @@
 import React,{Component} from 'react';
 import './App.css';
 import Cropper from './components/Cropper'; 
+import image from './1119.jpg'
 
 class App extends Component {
     constructor(){
         super();
         this.state = {
             value: "",
-            img: "https://www.am570.com.br/images/posts/1119/1119.jpg",
+            img: image,
             cropDisabled: true
         }
     }
@@ -25,6 +26,12 @@ class App extends Component {
         this.setState({cropDisabled: false})
     }
 
+    imgLoad(){
+        /*global cv*/
+        let mat = cv.imread('img');
+        console.log(mat)
+    }
+
     render () { 
         const { img, cropDisabled } = this.state
         return(  
@@ -33,6 +40,7 @@ class App extends Component {
                     <input type="file" accept="image/*" onChange={this.handleChange} />
                 </div>
                 <Cropper src={img} disabled={cropDisabled}/>
+                <img id='img' src={this.state.img} onLoad={this.imgLoad} />
                 <button onClick={this.handleCrop}>Cortar</button>
             </div>)
     };

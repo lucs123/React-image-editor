@@ -15,6 +15,7 @@ class App extends Component {
             cropDisabled: true
         }
         this.srcRef = React.createRef()
+        this.cnvRef = React.createRef()
         this.desRef = React.createRef()
         this.orRef = React.createRef()
     }
@@ -33,7 +34,17 @@ class App extends Component {
     }
 
     componentDidMount(){
-        const cropper = new Cropper(this.srcRef.current, {
+    }
+
+    imgLoad = ()=>{
+        const image = this.srcRef.current
+        console.log(image)
+        const canvas = this.cnvRef.current
+        canvas.width = image.width
+        canvas.height = image.height
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(image,0,0,image.width,image.height);
+        const cropper = new Cropper(canvas, {
         zoomable: false,
         // scalable: false,
         // aspectRatio: 1,
@@ -47,10 +58,7 @@ class App extends Component {
             // console.log(event.detail.scaleY);
         },
         });
-    }
 
-    imgLoad = ()=>{
-        const srcRef = this.srcRef.current
         const orRef = this.orRef.current
         let desRef = this.desRef.current
 
@@ -80,7 +88,8 @@ class App extends Component {
                     <input type="file" accept="image/*" onChange={this.handleChange} />
                 </div>
                 <div className={"img-container"}>
-                    <img id='src' ref={this.srcRef} src={this.state.img} onLoad={this.imgLoad} />
+                    <canvas id='src' ref={this.cnvRef}  />
+                    <img ref={this.srcRef} width='50%' style={{display:'none'}} src={this.state.img} onLoad={this.imgLoad}/>
                 </div>
                 <button onClick={this.handleCrop}>Cortar</button>
             </div>)

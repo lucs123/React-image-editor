@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import './App.css';
-import image from './1119.jpg'
 import unequalized from './Unequalized_Hawkes_Bay_NZ.jpg'
 import Editor from './components/Editor'
 import ImgList from './components/ImgList'
@@ -64,8 +63,7 @@ class App extends Component {
         })
     }
 
-    changeDb = (event)=>{
-        console.log(this.state.databases)
+    changeDb = async (event)=>{
         const newDb = event.target.textContent
         const currentBanco = this.state.banco
         if(currentBanco !== newDb){
@@ -83,29 +81,10 @@ class App extends Component {
                     newImages = database.images
                 }
             })
-            //
-            // this.setState(state=>{
-            //     const databases = state.databases.map(database=>{
-            //         // console.log(database)
-            //         if(database.name === currentBanco){
-            //             database.images = currentImages
-            //         }
-            //         if(database.name === newDb){
-            //             newImages = database.images
-            //         }
-            //     })
-            //     return{
-            //         banco: newDb,
-            //         images: newImages,
-            //         img: newImages[0],
-            //         databases: databases
-            //     }
-            // })
-            console.log(databases)
             this.editorRef.current.clearCanvas()
             const newImage = newImages[0]
             newImages.splice(0,1)
-            this.setState({
+            await this.setState({
                     banco: newDb,
                     images: newImages,
                     img: newImage,

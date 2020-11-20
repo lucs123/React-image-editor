@@ -4,7 +4,8 @@ import unequalized from './Unequalized_Hawkes_Bay_NZ.jpg'
 import Editor from './components/Editor'
 import ImgList from './components/ImgList'
 import DbList from './components/DbList'
-  
+import 'fontsource-roboto';
+import {Grid,withStyles} from '@material-ui/core';
 
 class App extends Component {
     constructor(){
@@ -114,13 +115,20 @@ class App extends Component {
     render () { 
         return(  
             <div className="App">
-                <div>
-                    <input type="file" accept="image/*" onChange={this.handleUpload} />
-                </div>
-                <Editor ref={this.editorRef} img={this.state.img}/>
-                <DbList databases={this.state.databases} createDB={this.createDB} changeDb={this.changeDb}/>
-                <ImgList images={this.state.images} changeImage={this.changeImage}/>
-                <button onClick={this.log}>Log</button>
+                <Grid container>
+                    <Grid item xs={'auto'}>
+                        <DbList databases={this.state.databases} createDB={this.createDB} changeDb={this.changeDb}/>
+                    </Grid>
+                    <Grid item xs={'auto'}>
+                        <div>
+                            <input type="file" accept="image/*" onChange={this.handleUpload} />
+                        </div>
+                        <Editor ref={this.editorRef} img={this.state.img}/>
+                    </Grid>
+                    <Grid item xs={'auto'}>
+                        <ImgList images={this.state.images} changeImage={this.changeImage}/>
+                    </Grid>
+                </Grid>
             </div>)
     };
 }

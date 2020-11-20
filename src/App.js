@@ -45,6 +45,24 @@ class App extends Component {
         link.click();
     }
 
+    backupImage = ()=>{
+        const canvas = this.cnvRef.current
+        const oldImage = canvas.toDataURL("image/png")
+        this.setState(state=>{
+            const oldImages = state.oldImages.concat(oldImage)
+            return{oldImages};
+        })
+    }
+
+    undoChange = ()=>{
+        const oldImages = this.state.oldImages 
+        const image = oldImages[oldImages.length - 1] 
+        this.clearCanvas()
+        this.srcRef.current.src = image
+        oldImages.splice(oldImages.length-1,1) 
+        this.setState({oldImages:oldImages})
+    }
+
     componentDidMount(){
         this.srcRef.current.src = unequalized
     }
@@ -79,6 +97,7 @@ class App extends Component {
     }
 
     getCropped = ()=>{
+        this.backupImage()
         const cropped = this.cropper.getCroppedCanvas()
         const newImage = cropped.toDataURL("image/png")
         this.clearCanvas()
@@ -104,6 +123,7 @@ class App extends Component {
     }
 
     equalize = ()=>{
+        this.backupImage()
         this.cropper.destroy()
         /*global cv*/
         const image = this.srcRef.current
@@ -138,6 +158,7 @@ class App extends Component {
                 <button onClick={this.handleZoom}>Enable Zoom</button>
                 <button onClick={this.clearCanvas}>Limpar</button>
                 <button onClick={this.getCropped}>Cortar</button>
+                {this.state.oldImages.length && <button onClick={this.undoChange}>Undo</button> }
             </div>)
     };
 }

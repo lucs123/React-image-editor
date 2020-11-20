@@ -7,14 +7,7 @@ img {
 }
 
 .img-container {
-    /* width: 640px; */
-    /* height: 480px; */
+    max-width: 65%;
     float: left;
 }
 
-.img-preview {
-    width: 200px;
-    height: 200px;
-    float: left;
-    margin-left: 10px;
-}

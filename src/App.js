@@ -14,6 +14,7 @@ class App extends Component {
             img: unequalized,
             cropDisabled: true,
             oldImages: [],
+            imageDestination: null
         }
         this.srcRef = React.createRef()
         this.cnvRef = React.createRef()
@@ -23,10 +24,7 @@ class App extends Component {
     }
 
     handleChange = async (event) =>{
-        this.cropper.destroy()
-        const canvas = this.cnvRef.current
-        const context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        this.clearCanvas()
         const newImage = URL.createObjectURL(event.target.files[0])
         this.srcRef.current.src = newImage
     }
@@ -37,7 +35,6 @@ class App extends Component {
         console.log(canvas)
         const context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
-        // this.forceUpdate()
     }
 
     handleDownload = ()=>{
@@ -58,7 +55,6 @@ class App extends Component {
 
     drawImage = ()=>{
         const image = this.srcRef.current
-        // console.log(image)
         const canvas = this.cnvRef.current
         canvas.width = image.width
         canvas.height = image.height
@@ -76,16 +72,17 @@ class App extends Component {
             autoCrop: false,
             background: false,
         crop(event) {
-            // console.log(event.detail.x);
-            // console.log(event.detail.y);
-            // console.log(event.detail.width);
-            // console.log(event.detail.height);
-            // console.log(event.detail.rotate);
-            // console.log(event.detail.scaleX);
-            // console.log(event.detail.scaleY);
+
         },
         });
         this.cropper = cropper
+    }
+
+    getCropped = ()=>{
+        const cropped = this.cropper.getCroppedCanvas()
+        const newImage = cropped.toDataURL("image/png")
+        this.clearCanvas()
+        this.srcRef.current.src = newImage
     }
 
     handleRotate = ()=>{
@@ -128,9 +125,11 @@ class App extends Component {
                 </div>
                 <div className={"img-container"}>
                     <canvas id='src' ref={this.cnvRef}  />
+                </div>
+                <div>
                     <img ref={this.srcRef} width='50%' style={{display:'none'}} onLoad={this.imgLoad}/>
                 </div>
-                <button onClick={this.handleCrop}>Cortar</button>
+                <button onClick={this.handleCrop}>Modo Cortar</button>
                 <button onClick={this.handleMove}>Move</button>
                 <button onClick={this.equalize}>Equalizar</button>
                 <button onClick={this.handleDownload}>Download</button>
@@ -138,6 +137,7 @@ class App extends Component {
                 <button onClick={this.handleRotate}>Right</button>
                 <button onClick={this.handleZoom}>Enable Zoom</button>
                 <button onClick={this.clearCanvas}>Limpar</button>
+                <button onClick={this.getCropped}>Cortar</button>
             </div>)
     };
 }

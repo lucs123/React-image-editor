@@ -12,7 +12,7 @@ class App extends Component {
         this.state = {
             value: "",
             img: unequalized,
-            cropDisabled: true,
+            equalized: false,
             oldImages: [],
             imageDestination: null
         }
@@ -47,7 +47,12 @@ class App extends Component {
 
     backupImage = ()=>{
         const canvas = this.cnvRef.current
-        const oldImage = canvas.toDataURL("image/png")
+        const image = canvas.toDataURL("image/png")
+        const equalized = this.state.equalized
+        const oldImage = {
+            image,
+            equalized
+        }
         this.setState(state=>{
             const oldImages = state.oldImages.concat(oldImage)
             return{oldImages};
@@ -56,11 +61,15 @@ class App extends Component {
 
     undoChange = ()=>{
         const oldImages = this.state.oldImages 
-        const image = oldImages[oldImages.length - 1] 
+        const image = oldImages[oldImages.length - 1].image 
+        const equalized = oldImages[oldImages.length - 1].equalized 
         this.clearCanvas()
         this.srcRef.current.src = image
         oldImages.splice(oldImages.length-1,1) 
-        this.setState({oldImages:oldImages})
+        this.setState({
+            oldImages:oldImages,
+            equalized:equalized
+        })
     }
 
     componentDidMount(){
@@ -123,18 +132,20 @@ class App extends Component {
     }
 
     equalize = ()=>{
-        this.backupImage()
-        this.cropper.destroy()
-        /*global cv*/
-        const image = this.srcRef.current
-        const canvas = this.cnvRef.current
-        let mat = cv.imread(image)
-        let dst = new cv.Mat();
-        cv.cvtColor(mat, mat, cv.COLOR_RGBA2GRAY, 0);
-        cv.equalizeHist(mat,dst)
-        // cv.imwrite('res.png')
-        cv.imshow(canvas, dst);
-        this.enableCrop()
+            if(!this.state.equalized){
+                this.backupImage()
+                this.cropper.destroy()
+                /*global cv*/
+                const image = this.srcRef.current
+                const canvas = this.cnvRef.current
+                let mat = cv.imread(image)
+                let dst = new cv.Mat();
+                cv.cvtColor(mat, mat, cv.COLOR_RGBA2GRAY, 0);
+                cv.equalizeHist(mat,dst)
+                cv.imshow(canvas, dst);
+                this.enableCrop()
+                this.setState({equalized: true})
+        }
     }
 
     render () { 
@@ -158,7 +169,7 @@ class App extends Component {
                 <button onClick={this.handleZoom}>Enable Zoom</button>
                 <button onClick={this.clearCanvas}>Limpar</button>
                 <button onClick={this.getCropped}>Cortar</button>
-                {this.state.oldImages.length && <button onClick={this.undoChange}>Undo</button> }
+                {this.state.oldImages.length ? <button onClick={this.undoChange}>Undo</button> : null }
             </div>)
     };
 }

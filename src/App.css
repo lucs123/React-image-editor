@@ -7,7 +7,16 @@ img {
 }
 
 .img-container {
-    max-width: 65%;
-    float: left;
+    position: absolute;
+    top: 30px;
+    left: 240px;
+    max-width: 55%;
+    max-height: 75%
+    /* float: left; */
+}
+
+.buttons {
+    position: absolute;
+    bottom: 10px
 }
 

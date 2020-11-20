@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import '../App.css';
 import Cropper from 'cropperjs'; 
 import "cropperjs/dist/cropper.min.css";
+import Paper from '@material-ui/core/Paper';
 
 class Editor extends Component{
     constructor(){
@@ -78,7 +79,6 @@ class Editor extends Component{
 
     imgLoad = ()=>{
         this.drawImage()
-        console.log('imgload')
     }
 
     drawImage = ()=>{
@@ -95,13 +95,8 @@ class Editor extends Component{
         const canvas = this.cnvRef.current
         const cropper = new Cropper(canvas, {
             zoomable: true,
-        // scalable: false,
-        // aspectRatio: 1,
             autoCrop: false,
             background: false,
-        crop(event) {
-
-        },
         });
         this.cropper = cropper
     }
@@ -152,22 +147,24 @@ class Editor extends Component{
     render () { 
         return(  
             <div>
-                <div className={"img-container"}>
+                <Paper className={"img-container"}>
                     <canvas id='src' ref={this.cnvRef}  />
-                </div>
+                </Paper>
                 <div>
                     <img ref={this.srcRef} width='50%' style={{display:'none'}} onLoad={this.imgLoad} />
                 </div>
-                <button onClick={this.handleCrop}>Modo Cortar</button>
-                <button onClick={this.handleMove}>Move</button>
-                <button onClick={this.equalize}>Equalizar</button>
-                <button onClick={this.handleDownload}>Download</button>
-                <button onClick={this.handleRotate}>Left</button>
-                <button onClick={this.handleRotate}>Right</button>
-                <button onClick={this.handleZoom}>Enable Zoom</button>
-                <button onClick={this.clearCanvas}>Limpar</button>
-                <button onClick={this.getCropped}>Cortar</button>
-                {this.state.oldImages.length ? <button onClick={this.undoChange}>Undo</button> : null }
+                <Paper className={"buttons"}>
+                    <button onClick={this.handleCrop}>Modo Cortar</button>
+                    <button onClick={this.handleMove}>Move</button>
+                    <button onClick={this.equalize}>Equalizar</button>
+                    <button onClick={this.handleDownload}>Download</button>
+                    <button onClick={this.handleRotate}>Left</button>
+                    <button onClick={this.handleRotate}>Right</button>
+                    <button onClick={this.handleZoom}>Enable Zoom</button>
+                    <button onClick={this.clearCanvas}>Limpar</button>
+                    <button onClick={this.getCropped}>Cortar</button>
+                    {this.state.oldImages.length ? <button onClick={this.undoChange}>Undo</button> : null }
+                </Paper>
             </div>)
     };
 }

@@ -25,8 +25,9 @@ class App extends Component {
 
     handleUpload = async (event) =>{
         const newImage = URL.createObjectURL(event.target.files[0])
+        const currentImage = this.editorRef.current.getImage()
         await this.setState(state=>{
-            const images = state.images.concat(state.img)
+            const images = state.images.concat(currentImage)
             return{
                 images:images,
                 img: newImage
@@ -37,9 +38,10 @@ class App extends Component {
 
     changeImage = async (event)=>{
         const image = event.target.src
+        const currentImage = this.editorRef.current.getImage()
         await this.setState(state=>{
             const images = state.images.filter(el=>el!==image)
-            images.push(state.img)
+            images.push(currentImage)
             return{
                 images: images,
                 img: image

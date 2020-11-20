@@ -7,9 +7,7 @@ class ImgList extends Component {
             <div>
                 <ul>
                     {this.props.images.map(image=>
-                        <li>
                             <img src={image} onClick={this.props.changeImage}/>
-                        </li>
                     )}
                 </ul>
             </div>

@@ -40,6 +40,11 @@ class Editor extends Component{
         link.click();
     }
 
+    getImage = ()=>{
+        const canvas = this.cnvRef.current
+        return canvas.toDataURL()
+    }
+
     backupImage = ()=>{
         const canvas = this.cnvRef.current
         const image = canvas.toDataURL("image/png")

@@ -13,12 +13,13 @@ class App extends Component {
             value: "",
             img: unequalized,
             cropDisabled: true,
-            oldImages: []
+            oldImages: [],
         }
         this.srcRef = React.createRef()
         this.cnvRef = React.createRef()
         this.desRef = React.createRef()
         this.orRef = React.createRef()
+        this.cropper = null
     }
 
     handleChange = (event) =>{
@@ -33,7 +34,7 @@ class App extends Component {
     handleDownload = ()=>{
         const canvas = this.cnvRef.current
         const link = document.createElement('a');
-        link.download = 'filename.png';
+        link.download = 'new_image.png';
         link.href = canvas.toDataURL()
         link.click();
     }
@@ -50,15 +51,17 @@ class App extends Component {
         canvas.height = image.height
         const ctx = canvas.getContext("2d");
         ctx.drawImage(image,0,0,image.width,image.height);
+        this.enableCrop()
     }
 
-    handleCrop = () =>{
+    enableCrop = () =>{
         const canvas = this.cnvRef.current
         const cropper = new Cropper(canvas, {
-            zoomable: false,
+            zoomable: true,
         // scalable: false,
         // aspectRatio: 1,
-            // autoCrop: false,
+            autoCrop: false,
+            background: false,
         crop(event) {
             // console.log(event.detail.x);
             // console.log(event.detail.y);
@@ -69,9 +72,29 @@ class App extends Component {
             // console.log(event.detail.scaleY);
         },
         });
+        this.cropper = cropper
+    }
+
+    handleRotate = ()=>{
+        this.cropper.rotate(90)
+    }
+
+    handleCrop = ()=>{
+        this.cropper.setDragMode('crop')
+    }
+
+    handleMove = ()=>{
+        this.cropper.setDragMode('move')
+    }
+
+    handleZoom = ()=>{
+        console.log(this.cropper)
+        this.cropper.zoomable = true
+        this.cropper.zoomOnWheel = true
     }
 
     equalize = ()=>{
+        this.cropper.destroy()
         /*global cv*/
         const image = this.srcRef.current
         const canvas = this.cnvRef.current
@@ -81,6 +104,7 @@ class App extends Component {
         cv.equalizeHist(mat,dst)
         // cv.imwrite('res.png')
         cv.imshow(canvas, dst);
+        this.enableCrop()
     }
 
     render () { 
@@ -95,8 +119,12 @@ class App extends Component {
                     <img ref={this.srcRef} width='50%' style={{display:'none'}} onLoad={this.imgLoad}/>
                 </div>
                 <button onClick={this.handleCrop}>Cortar</button>
+                <button onClick={this.handleMove}>Move</button>
                 <button onClick={this.equalize}>Equalizar</button>
                 <button onClick={this.handleDownload}>Download</button>
+                <button onClick={this.handleRotate}>Left</button>
+                <button onClick={this.handleRotate}>Right</button>
+                <button onClick={this.handleZoom}>Enable Zoom</button>
             </div>)
     };
 }

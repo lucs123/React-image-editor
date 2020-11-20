@@ -65,17 +65,17 @@ class App extends Component {
     }
 
     changeDb = (event)=>{
-        console.log(event.target.text)
-        const newDb = event.target.text 
+        console.log(this.state.databases)
+        const newDb = event.target.textContent
         const currentBanco = this.state.banco
         if(currentBanco !== newDb){
-        const currentImages = this.state.images
-        const currentImage = this.editorRef.current.getImage()
-        currentImages.push(currentImage)
-        let newImages = []
-        this.setState(state=>{
-            const databases = state.databases.map(database=>{
-                // console.log(database)
+            const currentImages = this.state.images
+            const currentImage = this.editorRef.current.getImage()
+            currentImages.push(currentImage)
+            let newImages = []
+            const databases = [...this.state.databases]
+                databases.forEach(database=>{
+                console.log(database)
                 if(database.name === currentBanco){
                     database.images = currentImages
                 }
@@ -83,13 +83,35 @@ class App extends Component {
                     newImages = database.images
                 }
             })
-            return{
-                banco: newDb,
-                images: newImages,
-                img: newImages[0],
-                databases: databases
-            }
-        })
+            //
+            // this.setState(state=>{
+            //     const databases = state.databases.map(database=>{
+            //         // console.log(database)
+            //         if(database.name === currentBanco){
+            //             database.images = currentImages
+            //         }
+            //         if(database.name === newDb){
+            //             newImages = database.images
+            //         }
+            //     })
+            //     return{
+            //         banco: newDb,
+            //         images: newImages,
+            //         img: newImages[0],
+            //         databases: databases
+            //     }
+            // })
+            console.log(databases)
+            this.editorRef.current.clearCanvas()
+            const newImage = newImages[0]
+            newImages.splice(0,1)
+            this.setState({
+                    banco: newDb,
+                    images: newImages,
+                    img: newImage,
+                    databases: databases
+            })
+            this.editorRef.current.handleChange()
     }}
 
     log = ()=>{

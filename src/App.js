@@ -22,13 +22,22 @@ class App extends Component {
         this.cropper = null
     }
 
-    handleChange = (event) =>{
-        this.setState({img: URL.createObjectURL(event.target.files[0])})
-        console.log(event.target)
+    handleChange = async (event) =>{
+        this.cropper.destroy()
+        const canvas = this.cnvRef.current
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        const newImage = URL.createObjectURL(event.target.files[0])
+        this.srcRef.current.src = newImage
     }
 
-    handleSubmit = (event) => {
-        console.log(this.state.img)
+    clearCanvas = ()=>{
+        this.cropper.destroy()
+        const canvas = this.cnvRef.current
+        console.log(canvas)
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        // this.forceUpdate()
     }
 
     handleDownload = ()=>{
@@ -43,9 +52,13 @@ class App extends Component {
         this.srcRef.current.src = unequalized
     }
 
-    imgLoad = async ()=>{
+    imgLoad = ()=>{
+        this.drawImage()
+    }
+
+    drawImage = ()=>{
         const image = this.srcRef.current
-        console.log(image)
+        // console.log(image)
         const canvas = this.cnvRef.current
         canvas.width = image.width
         canvas.height = image.height
@@ -108,7 +121,6 @@ class App extends Component {
     }
 
     render () { 
-        const { img, cropDisabled } = this.state
         return(  
             <div className="App">
                 <div>
@@ -125,6 +137,7 @@ class App extends Component {
                 <button onClick={this.handleRotate}>Left</button>
                 <button onClick={this.handleRotate}>Right</button>
                 <button onClick={this.handleZoom}>Enable Zoom</button>
+                <button onClick={this.clearCanvas}>Limpar</button>
             </div>)
     };
 }

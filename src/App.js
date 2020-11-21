@@ -1,11 +1,13 @@
 import React,{Component} from 'react';
 import './App.css';
 import unequalized from './Unequalized_Hawkes_Bay_NZ.jpg'
+import cat from './1119.jpg'
 import Editor from './components/Editor'
 import ImgList from './components/ImgList'
 import DbList from './components/DbList'
 import 'fontsource-roboto';
 import {Grid,withStyles} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 
 class App extends Component {
     constructor(){
@@ -94,8 +96,8 @@ class App extends Component {
             this.editorRef.current.handleChange()
     }}
 
-    log = ()=>{
-        console.log(this.state.databases)
+    handleDownload = ()=>{
+        this.editorRef.current.handleDownload()
     }
 
     changeImage = async (event)=>{
@@ -116,16 +118,17 @@ class App extends Component {
         return(  
             <div className="App">
                 <Grid container>
-                    <Grid item xs={'auto'}>
+                    <Grid item xs={3}>
                         <DbList databases={this.state.databases} createDB={this.createDB} changeDb={this.changeDb}/>
                     </Grid>
-                    <Grid item xs={'auto'}>
+                    <Grid item xs={8}>
                         <div>
                             <input type="file" accept="image/*" onChange={this.handleUpload} />
+                            <Button onClick={this.handleDownload}>Download</Button>
                         </div>
                         <Editor ref={this.editorRef} img={this.state.img}/>
                     </Grid>
-                    <Grid item xs={'auto'}>
+                    <Grid item xs={3}>
                         <ImgList images={this.state.images} changeImage={this.changeImage}/>
                     </Grid>
                 </Grid>

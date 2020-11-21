@@ -3,6 +3,7 @@ import '../App.css';
 import Cropper from 'cropperjs'; 
 import "cropperjs/dist/cropper.min.css";
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 class Editor extends Component{
     constructor(){
@@ -154,16 +155,15 @@ class Editor extends Component{
                     <img ref={this.srcRef} width='50%' style={{display:'none'}} onLoad={this.imgLoad} />
                 </div>
                 <Paper className={"buttons"}>
-                    <button onClick={this.handleCrop}>Modo Cortar</button>
-                    <button onClick={this.handleMove}>Move</button>
-                    <button onClick={this.equalize}>Equalizar</button>
-                    <button onClick={this.handleDownload}>Download</button>
-                    <button onClick={this.handleRotate}>Left</button>
-                    <button onClick={this.handleRotate}>Right</button>
-                    <button onClick={this.handleZoom}>Enable Zoom</button>
-                    <button onClick={this.clearCanvas}>Limpar</button>
-                    <button onClick={this.getCropped}>Cortar</button>
-                    {this.state.oldImages.length ? <button onClick={this.undoChange}>Undo</button> : null }
+                    <Button onClick={this.handleCrop}>Modo Cortar</Button>
+                    <Button onClick={this.handleMove}>Move</Button>
+                    <Button onClick={this.equalize}>Equalizar</Button>
+                    <Button onClick={this.handleRotate}>Left</Button>
+                    <Button onClick={this.handleRotate}>Right</Button>
+                    <Button onClick={this.handleZoom}>Enable Zoom</Button>
+                    <Button onClick={this.clearCanvas}>Limpar</Button>
+                    <Button onClick={this.getCropped}>Cortar</Button>
+                    {this.state.oldImages.length ? <Button onClick={this.undoChange}>Undo</Button> : null }
                 </Paper>
             </div>)
     };

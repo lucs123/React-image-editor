@@ -8,18 +8,25 @@ img {
 
 .img-container {
     position: absolute;
-    top: 40px;
+    top: 50px;
     left: 240px;
-    max-width: 55%;
-    max-height: 75%
+    max-width: 60%;
+    max-height: 80%
     /* float: left; */
 }
 
 .buttons {
     position: absolute;
-    bottom: 10px
+    bottom: 10px;
+    left:19%;
+    /* right:50%; */
 }
 
+.top-buttons {
+    position:absolute;
+    top:10px;
+    left:35%
+}
 .input {
     display: none
 }

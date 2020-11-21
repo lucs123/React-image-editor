@@ -131,12 +131,14 @@ class App extends Component {
                                 type="file"
                                 onChange={this.handleUpload}
                             />
-                            <label htmlFor="contained-button-file">
-                                <Button variant="contained" color="primary" component="span">
-                                    Upload
-                                </Button>
-                            </label>
-                            <Button variant="contained" color="secondary" onClick={this.handleDownload}>Download</Button>
+                            <div className={'top-buttons'}>
+                                <label htmlFor="contained-button-file">
+                                    <Button variant="contained" color="primary" component="span">
+                                        Upload
+                                    </Button>
+                                </label>
+                                <Button variant="outlined" color="secondary" onClick={this.handleDownload}>Download</Button>
+                            </div>
                         </div>
                         <Editor ref={this.editorRef} img={this.state.img}/>
                     </Grid>

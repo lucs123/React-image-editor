@@ -131,6 +131,11 @@ class Editor extends Component{
         this.cropper.setDragMode('move')
     }
 
+    cleanSelection = ()=>{
+        this.cropper.reset()
+        this.cropper.clear()
+    }
+
     handleZoom = ()=>{
         console.log(this.cropper)
         this.cropper.zoomable = true
@@ -166,6 +171,7 @@ class Editor extends Component{
                     <Button variant="outlined" onClick={this.handleMove}>Mover</Button>
                     <Button variant="outlined" onClick={this.equalize}>Equalizar Imagem</Button>
                     <Button variant="outlined" onClick={this.handleRotate}>Rotacionar</Button>
+                    <Button variant="outlined" onClick={this.cleanSelection}>Limpar seleção</Button>
                     <Button variant="outlined" onClick={this.getCropped}>Cortar</Button>
                     {this.state.oldImages.length ? <Button onClick={this.undoChange}>Desfazer</Button> : null }
                 </Paper>

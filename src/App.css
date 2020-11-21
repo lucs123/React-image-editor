@@ -18,13 +18,13 @@ img {
 .buttons {
     position: absolute;
     bottom: 10px;
-    left:25%;
+    left:23%;
 }
 
 .top-buttons {
     position:absolute;
     top:10px;
-    left:35%
+    left:40%
 }
 .input {
     display: none

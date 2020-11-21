@@ -123,8 +123,20 @@ class App extends Component {
                     </Grid>
                     <Grid item xs={8}>
                         <div>
-                            <input type="file" accept="image/*" onChange={this.handleUpload} />
-                            <Button onClick={this.handleDownload}>Download</Button>
+                            <input
+                                accept="image/*"
+                                className={'input'}
+                                id="contained-button-file"
+                                multiple
+                                type="file"
+                                onChange={this.handleUpload}
+                            />
+                            <label htmlFor="contained-button-file">
+                                <Button variant="contained" color="primary" component="span">
+                                    Upload
+                                </Button>
+                            </label>
+                            <Button variant="contained" color="secondary" onClick={this.handleDownload}>Download</Button>
                         </div>
                         <Editor ref={this.editorRef} img={this.state.img}/>
                     </Grid>

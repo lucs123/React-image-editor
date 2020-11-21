@@ -24,6 +24,7 @@ class Editor extends Component{
         console.log(this.props.img)
         this.clearCanvas()
         this.srcRef.current.src = this.props.img
+        this.setState({oldImages:[]})
     }
 
     clearCanvas = ()=>{
@@ -129,7 +130,6 @@ class Editor extends Component{
     }
 
     equalize = ()=>{
-            if(!this.state.equalized){
                 this.backupImage()
                 this.cropper.destroy()
                 /*global cv*/
@@ -142,7 +142,6 @@ class Editor extends Component{
                 cv.imshow(canvas, dst);
                 this.enableCrop()
                 this.setState({equalized: true})
-        }
     }
 
     render () { 
@@ -155,14 +154,14 @@ class Editor extends Component{
                     <img ref={this.srcRef} width='50%' style={{display:'none'}} onLoad={this.imgLoad} />
                 </div>
                 <Paper className={"buttons"}>
-                    <Button onClick={this.handleCrop}>Modo Cortar</Button>
-                    <Button onClick={this.handleMove}>Move</Button>
-                    <Button onClick={this.equalize}>Equalizar</Button>
-                    <Button onClick={this.handleRotate}>Left</Button>
-                    <Button onClick={this.handleRotate}>Right</Button>
-                    <Button onClick={this.handleZoom}>Enable Zoom</Button>
-                    <Button onClick={this.clearCanvas}>Limpar</Button>
-                    <Button onClick={this.getCropped}>Cortar</Button>
+                    <Button variant="outlined" onClick={this.handleCrop}>Modo Cortar</Button>
+                    <Button variant="outlined" onClick={this.handleMove}>Move</Button>
+                    <Button variant="outlined" onClick={this.equalize}>Equalizar</Button>
+                    <Button variant="outlined" onClick={this.handleRotate}>Left</Button>
+                    <Button variant="outlined" onClick={this.handleRotate}>Right</Button>
+                    <Button variant="outlined" onClick={this.handleZoom}>Enable Zoom</Button>
+                    <Button variant="outlined" onClick={this.clearCanvas}>Limpar</Button>
+                    <Button variant="outlined" onClick={this.getCropped}>Cortar</Button>
                     {this.state.oldImages.length ? <Button onClick={this.undoChange}>Undo</Button> : null }
                 </Paper>
             </div>)

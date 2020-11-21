@@ -154,15 +154,12 @@ class Editor extends Component{
                     <img ref={this.srcRef} width='50%' style={{display:'none'}} onLoad={this.imgLoad} />
                 </div>
                 <Paper className={"buttons"}>
-                    <Button variant="outlined" onClick={this.handleCrop}>Modo Cortar</Button>
-                    <Button variant="outlined" onClick={this.handleMove}>Move</Button>
-                    <Button variant="outlined" onClick={this.equalize}>Equalizar</Button>
-                    <Button variant="outlined" onClick={this.handleRotate}>Left</Button>
-                    <Button variant="outlined" onClick={this.handleRotate}>Right</Button>
-                    <Button variant="outlined" onClick={this.handleZoom}>Enable Zoom</Button>
-                    <Button variant="outlined" onClick={this.clearCanvas}>Limpar</Button>
+                    <Button variant="outlined" onClick={this.handleCrop}>Seleção</Button>
+                    <Button variant="outlined" onClick={this.handleMove}>Mover</Button>
+                    <Button variant="outlined" onClick={this.equalize}>Equalizar Imagem</Button>
+                    <Button variant="outlined" onClick={this.handleRotate}>Rotacionar</Button>
                     <Button variant="outlined" onClick={this.getCropped}>Cortar</Button>
-                    {this.state.oldImages.length ? <Button onClick={this.undoChange}>Undo</Button> : null }
+                    {this.state.oldImages.length ? <Button onClick={this.undoChange}>Desfazer</Button> : null }
                 </Paper>
             </div>)
     };

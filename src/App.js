@@ -1,12 +1,11 @@
 import React,{Component} from 'react';
 import './App.css';
 import unequalized from './Unequalized_Hawkes_Bay_NZ.jpg'
-import cat from './1119.jpg'
 import Editor from './components/Editor'
 import ImgList from './components/ImgList'
 import DbList from './components/DbList'
 import 'fontsource-roboto';
-import {Grid,withStyles} from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 
 class App extends Component {
@@ -27,11 +26,6 @@ class App extends Component {
         this.editorRef = React.createRef()
     }
 
-    // setImage = async (event) =>{
-    //     const newImage = URL.createObjectURL(event.target.files[0])
-    //     await this.setState({img: newImage})
-    //     this.editorRef.current.handleChange()
-    // }
 
     handleUpload = async (event) =>{
         const newImage = URL.createObjectURL(event.target.files[0])
@@ -46,9 +40,6 @@ class App extends Component {
         this.editorRef.current.handleChange()
     }
 
-    // componentDidMount(){
-    //     this.createDB()
-    // }
 
     createDB = ()=>{
         const nBanco = this.state.nBanco + 1
@@ -133,11 +124,11 @@ class App extends Component {
                             />
                             <div className={'top-buttons'}>
                                 <label htmlFor="contained-button-file">
-                                    <Button variant="contained" color="primary" component="span">
+                                    <Button variant="outlined"  component="span">
                                         Upload
                                     </Button>
                                 </label>
-                                <Button variant="outlined" color="secondary" onClick={this.handleDownload}>Download</Button>
+                                <Button variant="outlined" color="primary" onClick={this.handleDownload}>Download</Button>
                             </div>
                         </div>
                         <Editor ref={this.editorRef} img={this.state.img}/>

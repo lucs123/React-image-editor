@@ -1,7 +1,8 @@
-import React,{Component} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import Paper from '@material-ui/core/Paper';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,13 +24,15 @@ export default function ImgList(props) {
 
   return (
     <div >
-      <GridList className={classes.gridList} cols={1}>
-        {props.images.map((image) => (
-          <GridListTile onClick={props.changeImage} >
-            <img className={classes.image} src={image} />
-          </GridListTile>
-        ))}
-      </GridList>
+    <Paper>
+        <GridList className={classes.gridList} cols={1}>
+            {props.images.map((image) => (
+            <GridListTile onClick={props.changeImage} >
+                <img className={classes.image} src={image} />
+            </GridListTile>
+            ))}
+        </GridList>
+    </Paper>
     </div>
   );
 }

@@ -30,13 +30,17 @@ class App extends Component {
     handleUpload = async (event) =>{
         const newImage = URL.createObjectURL(event.target.files[0])
         const currentImage = this.editorRef.current.getImage()
+        if(currentImage){
         await this.setState(state=>{
             const images = state.images.concat(currentImage)
             return{
                 images:images,
                 img: newImage
             }
-        })
+        })}
+        else{
+            await this.setState({img:newImage})
+        }
         this.editorRef.current.handleChange()
     }
 
@@ -76,7 +80,11 @@ class App extends Component {
                 }
             })
             this.editorRef.current.clearCanvas()
-            const newImage = newImages[0]
+            let newImage = newImages[0]
+            if(!newImage){
+                newImage = null
+            }
+            console.log(newImages)
             newImages.splice(0,1)
             await this.setState({
                     banco: newDb,
@@ -93,6 +101,7 @@ class App extends Component {
 
     changeImage = async (event)=>{
         const image = event.target.src
+        console.log(image)
         const currentImage = this.editorRef.current.getImage()
         await this.setState(state=>{
             const images = state.images.filter(el=>el!==image)

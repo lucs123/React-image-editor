@@ -21,11 +21,12 @@ class Editor extends Component{
     }
 
     handleChange = async (event) =>{
-        console.log(this.props.img)
         this.clearCanvas()
-        this.srcRef.current.src = this.props.img
-        this.setState({oldImages:[]})
-    }
+        if(this.props.img){
+            console.log('handle change')
+            this.srcRef.current.src = this.props.img
+            this.setState({oldImages:[]})
+    }}
 
     clearCanvas = ()=>{
         this.cropper.destroy()
@@ -44,8 +45,13 @@ class Editor extends Component{
     }
 
     getImage = ()=>{
-        const canvas = this.cnvRef.current
-        return canvas.toDataURL()
+        if(this.props.img){
+            const canvas = this.cnvRef.current
+            return canvas.toDataURL()
+        }
+        else{
+            return null
+        }
     }
 
     backupImage = ()=>{
@@ -76,10 +82,12 @@ class Editor extends Component{
     }
 
     componentDidMount(){
+        if(this.props.img){
         this.srcRef.current.src = this.props.img
-    }
+    }}
 
     imgLoad = ()=>{
+        console.log('img load')
         this.drawImage()
     }
 

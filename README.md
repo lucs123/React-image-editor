@@ -3,7 +3,7 @@
 
 Image editor made in react.
 
-### ✨ [Demo](site.com)
+### ✨ [Demo](https://react-editor-lucs123.netlify.app/)
 
 ## Screenshots
 - ##### Histogram Equalization
@@ -20,7 +20,6 @@ Image editor made in react.
  - Cropper.js
 
 ## Install
-Download open.cv from https://docs.opencv.org/3.4.0/opencv.js and put it in the public folder, then run:
 ```sh
 npm install
 ```
